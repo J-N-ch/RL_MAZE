@@ -10,6 +10,12 @@ Original file is located at
 # Commented out IPython magic to ensure Python compatibility.
 # Modification from "https://github.com/YutaroOgawa/Deep-Reinforcement-Learning-Book/blob/master/program/2_2_maze_random.ipynb"
 import numpy as np
+
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import animation, rc
+matplotlib.rcParams['animation.embed_limit'] = 2**128
+
 import matplotlib.pyplot as plt
 # %matplotlib inline
 
@@ -280,16 +286,21 @@ while True:
 
 
 state_history_cutted = state_history
+for i in range(100):
+    state_history_cutted.append(state_history_cutted[len(state_history_cutted)-1])
+
 #state_history_cutted = state_history[0:1267]
 #print(state_history_cutted)
 
 # エージェントの移動の様子を可視化します
 # 参考URL http://louistiao.me/posts/notebooks/embedding-matplotlib-animations-in-jupyter-notebooks/
+'''
 import matplotlib
+matplotlib.use('Agg')
 from matplotlib import animation, rc
 matplotlib.rcParams['animation.embed_limit'] = 2**128
-
-from IPython.display import HTML
+'''
+#from IPython.display import HTML
 
 
 def init():
@@ -308,10 +319,13 @@ def animate(i):
 
 
 #　初期化関数とフレームごとの描画関数を用いて動画を作成する
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(
-    state_history), interval=50, repeat=False)
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=len(state_history), interval=50, repeat=False)
 
 #HTML(anim.to_jshtml())
 #rc('animation', html='jshtml')
 #anim
-plt.show()
+#plt.show()
+
+anim.save("maze_RL.mp4")
+
+
