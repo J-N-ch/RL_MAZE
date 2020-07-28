@@ -285,7 +285,7 @@ while True:
 #=====================================================================================
 
 
-state_history_cutted = state_history
+state_history_cutted = state_history.copy()
 for i in range(100):
     state_history_cutted.append(state_history_cutted[len(state_history_cutted)-1])
 
